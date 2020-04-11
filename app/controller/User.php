@@ -36,4 +36,10 @@ class User extends BaseController
 
     }
 
+    public function add(Request $request)
+    {
+        $returnvalue = $this->app->userService->insert($request->param());
+        return ok(json($returnvalue));
+    }
+
 }

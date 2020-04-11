@@ -3,7 +3,7 @@ namespace app\model;
 
 use think\Model;
 
-class Role extends Model
+class RoleModel extends Model
 {
 
     protected $schema = [

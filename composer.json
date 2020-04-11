@@ -17,12 +17,15 @@
         {
             "name": "yunwuxin",
             "email": "448901948@qq.com"
-        }        
+        }
     ],
     "require": {
         "php": ">=7.1.0",
         "topthink/framework": "^6.0.0",
-        "topthink/think-orm": "^2.0"
+        "topthink/think-orm": "^2.0",
+        "endroid/qrcode": "^3.7",
+        "alibabacloud/client": "^1.5",
+        "endroid/qr-code": "^3.7"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2",

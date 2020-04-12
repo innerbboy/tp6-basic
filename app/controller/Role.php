@@ -14,5 +14,14 @@ class Role extends BaseController
 
     }
 
+
+    public function test()
+    {
+        $token = ['token' => 'admin-token'];
+        $data = ['data' => $token, 'code' => 20000];
+        return json($data);
+
+    }
+
 }
 

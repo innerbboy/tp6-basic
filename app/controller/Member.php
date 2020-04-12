@@ -24,6 +24,10 @@ class Member extends BaseController
         return $this->app->cloudService->databaseQuery($request->param());
     }
 
+    public function test(Request $request) {
+        return $this->app->cloudService->test();
+    }
+
     public function sync() {
 
     }

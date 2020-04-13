@@ -6,7 +6,7 @@ use AlibabaCloud\Client\Exception\ClientException;
 use AlibabaCloud\Client\Exception\ServerException;
 use think\facade\Cache;
 use think\facade\Config;
-use think\Facade\Db;
+use think\facade\Db;
 
 // Download：https://github.com/aliyun/openapi-sdk-php
 // Usage：https://github.com/aliyun/openapi-sdk-php/blob/master/README.md

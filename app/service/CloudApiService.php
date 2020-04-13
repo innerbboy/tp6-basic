@@ -25,9 +25,8 @@ class CloudApiService
     }
 
     public static function test() {
-        $token = ['token' => 'admin-token'];
-        $data = ['data' => $token, 'code' => 20000];
-        return json($data);
+        $url = self::$http_api_url . getAccessToken();
+        return json($url);
     }
 
     public static function databaseAdd($param) {

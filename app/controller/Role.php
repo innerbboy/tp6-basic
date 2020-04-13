@@ -10,16 +10,17 @@ class Role extends BaseController
 {
     public function list()
     {
-        $list = '角色列表';
-        try {
-            $token = Cache::get('access_token');
-            echo $token;
-            $list = Db::name('sys_role')->select();
-        } catch (DbException $e) {
-            echo $e->getMessage();
-        }
-
-        return json($list);
+//        $list = '角色列表';
+//        try {
+//            $token = Cache::get('access_token');
+//            echo $token;
+//            $list = Db::name('sys_role')->select();
+//        } catch (DbException $e) {
+//            echo $e->getMessage();
+//        }
+//
+//        return json($list);
+        testDb();
 
     }
 

@@ -131,3 +131,17 @@ function fail($data) {
     return json($result);
 }
 
+function testDb() {
+    $list = '角色列表';
+    try {
+        $token = Cache::get('access_token');
+        echo $token;
+        $list = Db::name('sys_role')->select();
+    } catch (DbException $e) {
+        echo $e->getMessage();
+    }
+
+    return json($list);
+}
+
+

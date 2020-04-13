@@ -2,7 +2,7 @@
 namespace app\controller;
 
 use app\BaseController;
-use think\Exception;
+use think\db\exception\DbException;
 use think\Facade\Db;
 
 class Role extends BaseController
@@ -12,7 +12,7 @@ class Role extends BaseController
         $list = '角色列表';
         try {
             $list = Db::name('sys_role')->select();
-        } catch (Exception $e) {
+        } catch (DbException $e) {
             echo $e->getMessage();
         }
 

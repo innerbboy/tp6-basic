@@ -28,6 +28,10 @@ class Member extends BaseController
         return $this->app->cloudService->test();
     }
 
+    public function test2(Request $request) {
+        return $this->app->cloudService->test2();
+    }
+
     public function sync() {
 
     }

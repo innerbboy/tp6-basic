@@ -28,6 +28,10 @@ class CloudApiService
         $url = self::$http_api_url . getAccessToken();
         return json($url);
     }
+    public static function test2() {
+        $url = self::$http_api_url;
+        return json($url);
+    }
 
     public static function databaseAdd($param) {
 

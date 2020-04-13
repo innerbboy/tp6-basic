@@ -66,7 +66,7 @@ function getAccessToken() {
     $res = 'test dai';
     if (!$token) {
         $res = file_get_contents($wxConfig['getTokenUrl'].'&appid='.$wxConfig['appid'].'&secret='.$wxConfig['secret']);
-        $res = json_decode($res, true);
+//        $res = json_decode($res, true);
 //        $token = $res['access_token'];
 //        $time = $res['expires_in'];
 //        if($token){

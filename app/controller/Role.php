@@ -10,7 +10,7 @@ class Role extends BaseController
     {
         $list = Db::name('sys_role')->select();
 
-        return $list;
+        return json($list);
 
     }
 

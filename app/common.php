@@ -66,13 +66,14 @@ function getAccessToken() {
     $res = 'test dai';
     if (!$token) {
         $res = file_get_contents($wxConfig['getTokenUrl'].'&appid='.$wxConfig['appid'].'&secret='.$wxConfig['secret']);
+          // json_decode接受一个 JSON 格式的字符串并且把它转换为 PHP 变量
 //        $res = json_decode($res, true);
-//        $token = $res['access_token'];
-//        $time = $res['expires_in'];
-//        if($token){
-//            // 缓存在3600秒之后过期
-//            Cache::set('access_token', $token, $time);
-//        }
+        $token = $res['access_token'];
+        $time = $res['expires_in'];
+        if($token){
+            // 缓存在3600秒之后过期
+            Cache::set('access_token', $token, $time);
+        }
     }
     return $res;
 
@@ -111,7 +112,7 @@ function ok($data) {
         'data' => $data
     );
 
-    return $result;
+    return json($result);
 }
 
 function fail($data) {

@@ -4,6 +4,7 @@ namespace app\controller;
 use app\BaseController;
 use think\db\exception\DbException;
 use think\Facade\Db;
+use think\Facade\Cache;
 
 class Role extends BaseController
 {
@@ -11,6 +12,8 @@ class Role extends BaseController
     {
         $list = '角色列表';
         try {
+            $token = Cache::get('access_token');
+            echo $token;
             $list = Db::name('sys_role')->select();
         } catch (DbException $e) {
             echo $e->getMessage();

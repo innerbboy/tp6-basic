@@ -63,16 +63,16 @@ function getAccessToken() {
     $wxConfig = Config::get('wxconfig');
     // 将token放到缓存中
     $token = Cache::get('access_token');
-    if (!$token) {
-        $res = file_get_contents($wxConfig['getTokenUrl'].'&appid='.$wxConfig['appid'].'&secret='.$wxConfig['secret']);
-        $res = json_decode($res, true);
-        $token = $res['access_token'];
-        $time = $res['expires_in'];
-        if($token){
-            // 缓存在3600秒之后过期
-            Cache::set('access_token', $token, $time);
-        }
-    }
+//    if (!$token) {
+//        $res = file_get_contents($wxConfig['getTokenUrl'].'&appid='.$wxConfig['appid'].'&secret='.$wxConfig['secret']);
+//        $res = json_decode($res, true);
+//        $token = $res['access_token'];
+//        $time = $res['expires_in'];
+//        if($token){
+//            // 缓存在3600秒之后过期
+//            Cache::set('access_token', $token, $time);
+//        }
+//    }
     return $token;
 
 }

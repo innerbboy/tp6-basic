@@ -63,6 +63,7 @@ function getAccessToken() {
     $wxConfig = Config::get('wxconfig');
     // 将token放到缓存中
     $token = Cache::get('access_token');
+    $res = 'test dai';
     if (!$token) {
         $res = file_get_contents($wxConfig['getTokenUrl'].'&appid='.$wxConfig['appid'].'&secret='.$wxConfig['secret']);
         $res = json_decode($res, true);
@@ -73,7 +74,7 @@ function getAccessToken() {
 //            Cache::set('access_token', $token, $time);
 //        }
     }
-    return $token;
+    return $res;
 
 }
 

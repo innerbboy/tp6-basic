@@ -77,6 +77,7 @@ function getAccessToken() {
         }
     } catch (Exception $e) {
         echo $e->getMessage();
+        echo $token;
     }
 
     return $token;

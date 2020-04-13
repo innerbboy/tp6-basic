@@ -13,11 +13,11 @@ class CloudApiService
     }
 
     public static function databaseQuery($param) {
-//        $query = 'db.collection(\"member\").get()';
+        $query = 'db.collection(\"member\").get()';
         $url = self::$http_api_url . getAccessToken();
         $obj = new class{};
         $obj->env = self::$env;
-        $obj->query = $param['query'];
+        $obj->query = $query;// $param['query'];
         $data = json_encode($obj);
 
         return httpRequest($url,$data);

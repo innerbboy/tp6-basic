@@ -20,7 +20,7 @@ class Role extends BaseController
 //        }
 //
 //        return json($list);
-        testDb();
+        return testDb();
 
     }
 

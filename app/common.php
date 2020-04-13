@@ -111,7 +111,7 @@ function ok($data) {
         'data' => $data
     );
 
-    return json_encode($result);
+    return $result;
 }
 
 function fail($data) {

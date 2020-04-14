@@ -9,14 +9,9 @@ class Role extends BaseController
 {
     public function list()
     {
-        $list = '角色列表';
-        try {
-            $list = Db::name('sys_role')->select();
-        } catch (DbException $e) {
-            echo $e->getMessage();
-        }
+        $list = Db::name('sys_role')->select();
 
-        return json($list);
+        return ok($list);
     }
 
 

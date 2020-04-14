@@ -2,7 +2,6 @@
 namespace app\controller;
 
 use app\BaseController;
-use think\db\exception\DbException;
 use think\facade\Db;
 
 class Role extends BaseController

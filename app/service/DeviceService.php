@@ -34,5 +34,22 @@ class DeviceService
         return $list;
 
     }
+    public static function findUserList()
+    {
+        //TODO:分页查询 构造分页数据 定义一个分页类
+        $list = Db::table('sys_user')->page(1,10)->select(); //Db::find(1)->paginate(1,10);
+
+        return $list;
+
+    }
+
+    public static function findCompanyList()
+    {
+        //TODO:分页查询 构造分页数据 定义一个分页类
+        $list = Db::table('bs_company')->page(1,10)->select(); //Db::find(1)->paginate(1,10);
+
+        return $list;
+
+    }
 
 }

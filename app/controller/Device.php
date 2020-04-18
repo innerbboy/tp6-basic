@@ -18,6 +18,14 @@ class Device extends BaseController
         return ok($this->app->deviceService->findList($request->param()));
     }
 
+    public function userlist(Request $request) {
+        return ok($this->app->deviceService->findUserList($request->param()));
+    }
+
+    public function companylist(Request $request) {
+        return ok($this->app->deviceService->findCompanyList($request->param()));
+    }
+
     public function create(Request $request) {
         return ok($this->app->deviceService->insert($request->param()));
     }

@@ -2,6 +2,9 @@
 
 namespace app\controller;
 
+use app\BaseController;
+use app\Request;
+
 /**
  * Class Device
  * @package app\controller
@@ -12,7 +15,11 @@ class Device extends BaseController
 {
 
     public function list(Request $request) {
-        return $this->app->deviceService->findList($request->param());
+        return ok($this->app->deviceService->findList($request->param()));
+    }
+
+    public function create(Request $request) {
+        return ok($this->app->deviceService->insert($request->param()));
     }
 
     public function sync() {

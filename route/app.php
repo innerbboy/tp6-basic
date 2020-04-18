@@ -15,3 +15,6 @@ Route::get('think', function () {
 });
 
 Route::get('hello/:name', 'index/hello');
+
+// ----- 需要token 验证的接口
+//Route::post('user/login',"User/doLogin")->middleware('check');

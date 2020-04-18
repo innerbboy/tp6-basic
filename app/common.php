@@ -132,17 +132,13 @@ function fail($data) {
     return json($result);
 }
 
-function testDb() {
-    $list = '角色列表';
-    try {
-        $token = Cache::get('access_token');
-        echo $token;
-        $list = Db::name('sys_role')->select();
-    } catch (DbException $e) {
-        echo $e->getMessage();
-    }
+function return_msg($code,$msg) {
+    $result=array(
+        'code' => $code,
+        'msg' => $msg
+    );
 
-    return json($list);
+    return json($result);
 }
 
 

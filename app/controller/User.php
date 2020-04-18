@@ -1,19 +1,48 @@
 <?php
 namespace app\controller;
 
+use app\api\libs\Auth;
 use app\BaseController;
 use app\Request;
+use app\model\UserModel;
 
 class User extends BaseController
 {
+
+    public function doLogin(Request $request) {
+        $data = $request::post();
+        // 把数据交由模型层来进行处理
+        UserModel::checkLogin($data);
+
+        // 如果验证成功
+        // 1 设置token
+        // 2 返回token到前端
+        Auth::getInstance()->setToken();
+        $token = Auth::getInstance()->getToken();
+        $data = ['data' => $token, 'code' => 20000];
+        return json($data);
+
+    }
     public function login(Request $request)
     {
         //1 校验参数
         //2 生成token
         //3 存储token
-        $token = ['token' => 'admin-token'];
+        $data = $request::post();
+        // 把数据交由模型层来进行处理
+        UserModel::checkLogin($data);
+
+        // 如果验证成功
+        // 1 设置token
+        // 2 返回token到前端
+        Auth::getInstance()->setToken();
+        $token = Auth::getInstance()->getToken();
         $data = ['data' => $token, 'code' => 20000];
         return json($data);
+
+//        $token = ['token' => 'admin-token'];
+//        $data = ['data' => $token, 'code' => 20000];
+//        return json($data);
     }
 
     public function info()

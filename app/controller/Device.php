@@ -27,7 +27,9 @@ class Device extends BaseController
     }
 
     public function create(Request $request) {
-        return ok($this->app->deviceService->insert($request->param()));
+        // 推送到云端
+        $this->app->cloudService->databaseAdd('bs_device',$request->param());
+//        return ok($this->app->deviceService->insert($request->param()));
     }
 
     public function sync() {

@@ -62,7 +62,7 @@ function sendSms($phone,$code) {
  */
 function getAccessToken() {
     $wxConfig = Config::get('wxconfig');
-    // 将token放到缓存中
+    // 将token放到缓存中,检查token是否失效
     $token = Cache::get('access_token');
     try {
         if (!$token) {

@@ -17,7 +17,8 @@ class DeviceService
     public static function insert(array $data)
     {
         $device = new DeviceModel($data);
-        // TODO: 推送到云端
+
+
         return $device->save();
     }
 

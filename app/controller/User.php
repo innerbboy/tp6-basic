@@ -52,7 +52,7 @@ class User extends BaseController
     {
         //1 根据token查询用户信息
         $roles=array(0=>"admin");
-        $result = ['roles' => $roles, 'name' => 'Super Admin',"introduction" => '',"avatar" =>''];
+        $result = ['roles' => $roles, 'name' => 'Super Admin', 'avatar' =>'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'];
         $data = ['code' => 20000, 'msg' => 'success', 'data' => $result];
 
         return json($data);

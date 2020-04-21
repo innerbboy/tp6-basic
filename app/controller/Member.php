@@ -21,7 +21,7 @@ class Member extends BaseController
      * @return mixed
      */
     public function list(Request $request) {
-        return $this->app->cloudService->databaseQuery($request->param());
+        return $this->app->cloudService->databaseQuery('cloud_member',$request->param());
     }
 
     public function test(Request $request) {

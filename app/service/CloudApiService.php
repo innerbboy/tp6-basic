@@ -27,6 +27,28 @@ class CloudApiService
 
     }
 
+    public static function findCompanyList() {
+        $query = "db.collection('bs_company').get()";
+        $url = self::$http_api_url . getAccessToken();
+        $obj = new class{};
+        $obj->env = self::$env;
+        $obj->query = $query;
+        $data = json_encode($obj);
+
+        return httpRequest($url,$data);
+    }
+
+    public static function findDeviceList() {
+        $query = "db.collection('bs_device').get()";
+        $url = self::$http_api_url . getAccessToken();
+        $obj = new class{};
+        $obj->env = self::$env;
+        $obj->query = $query;
+        $data = json_encode($obj);
+
+        return httpRequest($url,$data);
+    }
+
     public static function databaseAdd($collection,array $dataObj) {
         $url = self::$HTTPAPI_DATABASE_ADD . getAccessToken();
         try  {
@@ -63,7 +85,7 @@ class CloudApiService
     }
 
     public static function databaseDelete($collection,array $dataObj) {
-        $url = self::$HTTPAPI_DATABASE_UPDATE . getAccessToken();
+        $url = self::$HTTPAPI_DATABASE_DELETE . getAccessToken();
         try  {
             $modelObj = new class{};
             $modelObj->data = $dataObj;
@@ -71,7 +93,7 @@ class CloudApiService
 
             $obj = new class{};
             $obj->env = self::$env;
-            $obj->query = $query;// $param['query'];
+            $obj->query = $query;
             $data = json_encode($obj);
         } catch (Exception $e) {
             echo $e->getMessage();

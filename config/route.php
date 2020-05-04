@@ -42,4 +42,7 @@ return [
     'default_jsonp_handler' => 'jsonpReturn',
     // 默认JSONP处理方法
     'var_jsonp_handler'     => 'callback',
+//    'middleware'    =>    [
+//        app\api\libs\Auth::class
+//    ],
 ];

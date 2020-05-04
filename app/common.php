@@ -135,10 +135,10 @@ function fail($data) {
 function return_msg($code,$msg) {
     $result=array(
         'code' => $code,
-        'msg' => $msg
+        'message' => $msg
     );
 
-    return json($result);
+    return $result;
 }
 
 

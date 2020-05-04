@@ -15,6 +15,20 @@ Route::get('think', function () {
 });
 
 Route::get('hello/:name', 'index/hello');
+//
+//Route::group('admin',function(){
+//    Route::get('device/list','/Device/list');
+//})->middleware('checkApiLogin');
 
 // ----- 需要token 验证的接口
-//Route::post('user/login',"User/doLogin")->middleware('check');
+Route::get('device/list','/Device/list')->middleware('checkApiLogin');
+
+
+
+// ----- 需要验证admin登录的接口
+//Route::group('admin',function(){
+//    Route::get('/Device/list');
+//})->middleware('checkAdminLogin');
+
+//Route::post('device/index','Device/list')->middleware('checkApiLogin');
+

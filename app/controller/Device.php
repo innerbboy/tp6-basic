@@ -15,27 +15,22 @@ class Device extends BaseController
 {
 
     public function list(Request $request) {
-//        return ok($this->app->deviceService->findList($request->param()));
         // 从小程序端获取
         return $this->app->cloudService->databaseQuery('bs_device',$request->param());
     }
 
-    public function userlist(Request $request) {
-        return ok($this->app->deviceService->findUserList($request->param()));
+    public function deviceList(Request $request) {
+        return $this->app->cloudService->findDeviceList($request->param());
     }
 
-    public function companylist(Request $request) {
-        return ok($this->app->deviceService->findCompanyList($request->param()));
+    public function companylist() {
+        return $this->app->cloudService->findCompanyList();
     }
 
-    public function identityList(Request $request) {
-        return $this->app->cloudService->databaseQuery('bs_identity',$request->param());
-    }
 
     public function create(Request $request) {
         // 推送到云端
         $this->app->cloudService->databaseAdd('bs_device',$request->param());
-//        return ok($this->app->deviceService->insert($request->param()));
     }
 
     public function update(Request $request) {

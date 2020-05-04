@@ -12,40 +12,19 @@ class User extends BaseController
     public function list(Request $request) {
         return ok($this->app->userService->findList($request->param()));
     }
-    public function doLogin(Request $request) {
-        $data = $request::post();
-        // 把数据交由模型层来进行处理
+    public function login(Request $request) {
+        $data = $request->param();
+        // 0 校验参数，把数据交由模型层来进行处理
         UserModel::checkLogin($data);
 
-        // 如果验证成功
         // 1 设置token
         // 2 返回token到前端
         Auth::getInstance()->setToken();
         $token = Auth::getInstance()->getToken();
-        $data = ['data' => $token, 'code' => 20000];
-        return json($data);
+        $data = ['token' => $token];
+        $result = ['data' => $data, 'code' => 20000];
+        return json($result);
 
-    }
-    public function login(Request $request)
-    {
-        //1 校验参数
-        //2 生成token
-        //3 存储token
-//        $data = $request::post();
-//        // 把数据交由模型层来进行处理
-//        UserModel::checkLogin($data);
-//
-//        // 如果验证成功
-//        // 1 设置token
-//        // 2 返回token到前端
-//        Auth::getInstance()->setToken();
-//        $token = Auth::getInstance()->getToken();
-//        $data = ['data' => $token, 'code' => 20000];
-//        return json($data);
-
-        $token = ['token' => 'admin-token'];
-        $data = ['data' => $token, 'code' => 20000];
-        return json($data);
     }
 
     public function info()
@@ -58,19 +37,31 @@ class User extends BaseController
         return json($data);
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
-        //1 清除token
-        session('token',null);
-        $data = ['code' => 20000, 'msg' => 'success'];
-
-        return json($data);
-
+        $token = $request->param()['token'];
+        //1 根据用户名，清除token+过期时间
+        $user = UserModel::where('token','=',$token)->find();
+        $user->token = null;
+        $user->expire_time = 0;
+        $user->save();
     }
 
-    public function add(Request $request)
+    public function create(Request $request)
     {
         $returnvalue = $this->app->userService->insert($request->param());
+        return ok(json($returnvalue));
+    }
+
+    public function update(Request $request)
+    {
+        $returnvalue = $this->app->userService->update($request->param());
+        return ok(json($returnvalue));
+    }
+
+    public function delete(Request $request)
+    {
+        $returnvalue = $this->app->userService->delete($request->param());
         return ok(json($returnvalue));
     }
 

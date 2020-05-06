@@ -27,6 +27,18 @@ class CloudApiService
 
     }
 
+    public static function findDailyCheckList($collection,$param) {
+        $query = "db.collection('" . $collection . "').where({kind_type:" . $param['kindType'] . "}).get()";
+        $url = self::$http_api_url . getAccessToken();
+        $obj = new class{};
+        $obj->env = self::$env;
+        $obj->query = $query;// $param['query'];
+        $data = json_encode($obj);
+
+        return httpRequest($url,$data);
+
+    }
+
     public static function findCompanyList() {
         $query = "db.collection('bs_company').get()";
         $url = self::$http_api_url . getAccessToken();

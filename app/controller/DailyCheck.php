@@ -16,7 +16,7 @@ class DailyCheck extends BaseController
 {
 
     public function list(Request $request) {
-        return $this->app->cloudService->databaseQuery('bs_daily_check',$request->param());
+        return $this->app->cloudService->findDailyCheckList('bs_daily_check',$request->param());
     }
 
     public function create(Request $request) {

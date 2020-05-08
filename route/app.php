@@ -21,7 +21,7 @@ Route::get('hello/:name', 'index/hello');
 //})->middleware('checkApiLogin');
 
 // ----- 需要token 验证的接口
-Route::get('device/list','/Device/list')->middleware('checkApiLogin');
+// Route::get('device/list','/Device/list')->middleware('checkApiLogin');
 
 
 

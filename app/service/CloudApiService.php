@@ -61,6 +61,18 @@ class CloudApiService
         return httpRequest($url,$data);
     }
 
+    public static function findTypeList() {
+        $query = "db.collection('bs_device_type').get()";
+        $url = self::$http_api_url . getAccessToken();
+        $obj = new class{};
+        $obj->env = self::$env;
+        $obj->query = $query;
+        $data = json_encode($obj);
+
+        return httpRequest($url,$data);
+    }
+
+
     public static function databaseAdd($collection,array $dataObj) {
         $url = self::$HTTPAPI_DATABASE_ADD . getAccessToken();
         try  {

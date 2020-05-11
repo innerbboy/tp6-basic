@@ -21,7 +21,6 @@ class Identity extends BaseController
     public function create(Request $request) {
         // 推送到云端
         $this->app->cloudService->databaseAdd('bs_identity',$request->param());
-//        return ok($this->app->deviceService->insert($request->param()));
     }
 
     public function update(Request $request) {

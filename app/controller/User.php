@@ -15,7 +15,10 @@ class User extends BaseController
     public function login(Request $request) {
         $data = $request->param();
         // 0 校验参数，把数据交由模型层来进行处理
-        UserModel::checkLogin($data);
+        $checkData = UserModel::checkLogin($data);
+        if ($checkData['code'] == 1) {
+            return $checkData;
+        }
 
         // 1 设置token
         // 2 返回token到前端

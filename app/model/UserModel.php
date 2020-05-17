@@ -43,13 +43,16 @@ class UserModel extends Model
             return return_msg(1,"用户名不存在");
         }
         //验证密码是否正确
-        $hash = password_hash("111111", PASSWORD_DEFAULT); // $m['password']
-        if(password_verify($data['password'],$m['password'])) {
-            return return_msg(1,"密码输入错误");
+        $hash = password_hash($data['password'], PASSWORD_DEFAULT); // $m['password']
+//        $hash = '$2y$07$BCryptRequires22Chrcte/VlQH0piJtjXl.0t1XkA8pw9dMXTpOq';
+        if(password_verify($m['password'],$hash)) {
+            //记录用户登录的状态
+            session('username',$data['username']);
+            session('userid',$m['id']);
+            return return_msg(0,"登录成功");
         }
-        //记录用户登录的状态
-        session('username',$data['username']);
-        session('userid',$m['id']);
-        return return_msg(0,"登录成功");
+
+        return return_msg(1,"密码输入错误");
+
     }
 }

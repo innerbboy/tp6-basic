@@ -5,6 +5,8 @@ class CloudApiService
 {
     //定义一个静态成员变量
     protected static $env = 'test-87exc';
+    // 开发环境
+//    protected static $env = 'dev-jxhh-20200306';
     protected static $http_api_url = 'https://api.weixin.qq.com/tcb/databasequery?access_token=';
     protected static $HTTPAPI_DATABASE_ADD = 'https://api.weixin.qq.com/tcb/databaseadd?access_token=';
     protected static $HTTPAPI_DATABASE_UPDATE = 'https://api.weixin.qq.com/tcb/databaseupdate?access_token=';
@@ -17,6 +19,10 @@ class CloudApiService
 
     public static function databaseQuery($collection,$param) {
         $query = "db.collection('" . $collection . "').get()";
+        if (strcmp($collection ,'bs_device') == 0) {
+            $query = self::getDeviceTypeQuery($collection,$param);
+        }
+
         $url = self::$http_api_url . getAccessToken();
         $obj = new class{};
         $obj->env = self::$env;
@@ -25,6 +31,22 @@ class CloudApiService
 
         return httpRequest($url,$data);
 
+    }
+
+    private static function getDeviceTypeQuery($collection,$param) {
+        $query = "db.collection('" . $collection . "')";
+        $where = "";
+        if ($param['company_code']) {
+            $where = ".where({company_code:'" . $param['company_code'] . "'})";
+        }
+
+        if ($where) {
+            $query = $query . $where;
+        }
+
+        $query =  $query . ".get()";
+
+        return $query;
     }
 
     public static function findDailyCheckList($collection,$param) {

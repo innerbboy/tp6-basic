@@ -18,11 +18,23 @@ class CloudApiService
     }
 
     public static function databaseQuery($collection,$param) {
-        $query = "db.collection('" . $collection . "').get()";
+        $query = "db.collection('" . $collection . "')";      // .skip(" . $skipSize . ").limit(" . $limitSize . ").orderBy('createTime', 'desc').get()";
         if (strcmp($collection ,'bs_device') == 0) {
-            $query = self::getDeviceTypeQuery($collection,$param);
+            $query = $query . self::getDeviceQuery($param);
+            $query = $query .  self:: wrapPage($param);
+            $query = $query .  ".orderBy('createTime', 'desc')";
+        }
+        if (strcmp($collection ,'bs_device_type') == 0) {
+            $query = $query . self::getDeviceTypeQuery($param);
+            $query = $query .  self:: wrapPage($param);
+            $query = $query .  ".orderBy('createTime', 'desc')";
+        }
+        if (strcmp($collection ,'bs_identity') == 0) {
+            $query = $query .  self:: wrapPage($param);
+            $query = $query .  ".orderBy('createTime', 'desc')";
         }
 
+        $query = $query . ".get()";
         $url = self::$http_api_url . getAccessToken();
         $obj = new class{};
         $obj->env = self::$env;
@@ -33,20 +45,31 @@ class CloudApiService
 
     }
 
-    private static function getDeviceTypeQuery($collection,$param) {
-        $query = "db.collection('" . $collection . "')";
+    private static function wrapPage($param) {
+        $skipSize = ($param['page'] - 1) * $param['limit'];
+        $limitSize = $param['limit'];
+        $pageStr = ".skip(" . $skipSize . ").limit(" . $limitSize . ")";
+
+        return $pageStr;
+
+    }
+
+    private static function getDeviceQuery($param) {
         $where = "";
         if ($param['company_code']) {
             $where = ".where({company_code:'" . $param['company_code'] . "'})";
         }
 
-        if ($where) {
-            $query = $query . $where;
+        return $where;
+    }
+
+    private static function getDeviceTypeQuery($param) {
+        $where = "";
+        if ($param['name']) {
+            $where = ".where({name:'" . $param['name'] . "'})";
         }
 
-        $query =  $query . ".get()";
-
-        return $query;
+        return $where;
     }
 
     public static function findDailyCheckList($collection,$param) {

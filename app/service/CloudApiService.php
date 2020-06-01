@@ -85,7 +85,7 @@ class CloudApiService
     }
 
     public static function findCompanyList() {
-        $query = "db.collection('bs_company').get()";
+        $query = "db.collection('bs_company').limit(100).get()";
         $url = self::$http_api_url . getAccessToken();
         $obj = new class{};
         $obj->env = self::$env;
@@ -107,7 +107,8 @@ class CloudApiService
     }
 
     public static function findTypeList() {
-        $query = "db.collection('bs_device_type').get()";
+        // limit 默认10条，这里设置为100条
+        $query = "db.collection('bs_device_type').limit(100).orderBy('createTime', 'desc').get()";
         $url = self::$http_api_url . getAccessToken();
         $obj = new class{};
         $obj->env = self::$env;

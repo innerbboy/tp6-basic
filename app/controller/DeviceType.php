@@ -33,6 +33,11 @@ class DeviceType extends BaseController
         $this->app->cloudService->databaseUpdate('bs_device_type',$request->param());
     }
 
+    public function updateCompany(Request $request) {
+        // 批量更新公司
+        $this->app->cloudService->batchUpdateCompany('bs_device_type',$request->param());
+    }
+
     public function delete(Request $request) {
         // 更新云端数据
         $this->app->cloudService->databaseDelete('bs_device_type',$request->param());

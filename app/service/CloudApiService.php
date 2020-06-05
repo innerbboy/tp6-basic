@@ -121,7 +121,7 @@ class CloudApiService
 
     public static function findDeviceList()
     {
-        $query = "db.collection('bs_device').get()";
+        $query = "db.collection('bs_device').limit(100).orderBy('createTime', 'desc').get()";
         $url = self::$http_api_url . getAccessToken();
         $obj = new class
         {

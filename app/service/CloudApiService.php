@@ -21,7 +21,7 @@ class CloudApiService
 
     public static function databaseQuery($collection, $param)
     {
-        $query = "db.collection('" . $collection . "')";      // .skip(" . $skipSize . ").limit(" . $limitSize . ").orderBy('createTime', 'desc').get()";
+        $query = "db.collection('" . $collection . "')";
         if (strcmp($collection, 'bs_device') == 0) {
             $query = $query . self::getDeviceQuery($param);
             $query = $query . self:: wrapPage($param);
@@ -33,6 +33,16 @@ class CloudApiService
             $query = $query . ".orderBy('createTime', 'desc')";
         }
         if (strcmp($collection, 'bs_identity') == 0) {
+            $query = $query . self:: wrapPage($param);
+            $query = $query . ".orderBy('createTime', 'desc')";
+        }
+        if (strcmp($collection, 'cloud_member') == 0) {
+            $query = $query . self::getMemberQuery($param);
+            $query = $query . self:: wrapPage($param);
+            $query = $query . ".orderBy('createTime', 'desc')";
+        }
+        if (strcmp($collection, 'bs_identity') == 0) {
+            $query = $query . self::getIdentityQuery($param);
             $query = $query . self:: wrapPage($param);
             $query = $query . ".orderBy('createTime', 'desc')";
         }
@@ -60,11 +70,59 @@ class CloudApiService
 
     }
 
+    private static function getIdentityQuery($param)
+    {
+        $where = "";
+        if ($param['name']) {
+            $condition = array();
+            if ($param['name']) {
+                $condition['real_name'] = $param['name'];
+            }
+            if ($param['phone']) {
+                $condition['phone'] = $param['phone'];
+            }
+
+            $where = ".where(" . json_encode($condition) . ")";
+        }
+
+        return $where;
+    }
+
+    private static function getMemberQuery($param)
+    {
+        $where = "";
+        if ($param['nickname'] || $param['phone']) {
+            $condition = array();
+            if ($param['nickname']) {
+                $condition['nickname'] = $param['nickname'];
+            }
+            if ($param['phone']) {
+                $condition['phone'] = $param['phone'];
+            }
+            $where = ".where(" . json_encode($condition) . ")";
+        }
+
+        return $where;
+    }
+
     private static function getDeviceQuery($param)
     {
         $where = "";
-        if ($param['company_code']) {
-            $where = ".where({company_code:'" . $param['company_code'] . "'})";
+        if ($param['name'] || $param['model_type'] || $param['company_code'] || $param['device_code']) {
+            $condition = array();
+            if ($param['name']) {
+                $condition['name'] = $param['name'];
+            }
+            if ($param['model_type']) {
+                $condition['model_type'] = $param['model_type'];
+            }
+            if ($param['company_code']) {
+                $condition['company_code'] = $param['company_code'];
+            }
+            if ($param['device_code']) {
+                $condition['device_code'] = $param['device_code'];
+            }
+            $where = ".where(" . json_encode($condition) . ")";
         }
 
         return $where;
@@ -121,7 +179,8 @@ class CloudApiService
 
     public static function findDeviceList()
     {
-        $query = "db.collection('bs_device').limit(100).orderBy('createTime', 'desc').get()";
+        // limit 默认10条，这里设置为1000条
+        $query = "db.collection('bs_device').limit(1000).orderBy('createTime', 'desc').get()";
         $url = self::$http_api_url . getAccessToken();
         $obj = new class
         {

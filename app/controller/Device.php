@@ -23,6 +23,10 @@ class Device extends BaseController
         return $this->app->cloudService->findDeviceList($request->param());
     }
 
+    public function typeList(Request $request) {
+        return $this->app->cloudService->findTypeList($request->param());
+    }
+
     public function companylist() {
         return $this->app->cloudService->findCompanyList();
     }
@@ -37,13 +41,14 @@ class Device extends BaseController
         // 更新云端数据
         $this->app->cloudService->databaseUpdate('bs_device',$request->param());
     }
+    public function updateCompany(Request $request) {
+        // 批量更新公司
+        $this->app->cloudService->batchUpdateCompany('bs_device',$request->param());
+    }
 
     public function delete(Request $request) {
         // 更新云端数据
         $this->app->cloudService->databaseDelete('bs_device',$request->param());
     }
 
-    public function sync() {
-
-    }
 }

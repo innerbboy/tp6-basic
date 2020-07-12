@@ -46,6 +46,11 @@ class CloudApiService
             $query = $query . self:: wrapPage($param);
             $query = $query . ".orderBy('createTime', 'desc')";
         }
+        if (strcmp($collection, 'bs_daily_check') == 0) {
+            $query = $query . self::getDailyCheckQuery($param);
+            $query = $query . self:: wrapPage($param);
+            $query = $query . ".orderBy('createTime', 'desc')";
+        }
 
         $query = $query . ".get()";
         $url = self::$http_api_url . getAccessToken();
@@ -105,6 +110,23 @@ class CloudApiService
         return $where;
     }
 
+    private static function getDailyCheckQuery($param)
+    {
+        $where = "";
+        if ($param['company_code'] || $param['kindType']) {
+            $condition = array();
+            if ($param['company_code']) {
+                $condition['company_code'] = $param['company_code'];
+            }
+            if ($param['kindType']) {
+                $condition['kind_type'] = intval($param['kindType']);
+            }
+            $where = ".where(" . json_encode($condition) . ")";
+        }
+
+        return $where;
+    }
+
     private static function getDeviceQuery($param)
     {
         $where = "";
@@ -148,20 +170,20 @@ class CloudApiService
         return $where;
     }
 
-    public static function findDailyCheckList($collection, $param)
-    {
-        $query = "db.collection('" . $collection . "').where({kind_type:" . $param['kindType'] . "}).get()";
-        $url = self::$http_api_url . getAccessToken();
-        $obj = new class
-        {
-        };
-        $obj->env = self::$env;
-        $obj->query = $query;// $param['query'];
-        $data = json_encode($obj);
-
-        return httpRequest($url, $data);
-
-    }
+//    public static function findDailyCheckList($collection, $param)
+//    {
+//        $query = "db.collection('" . $collection . "').where({kind_type:" . $param['kindType'] . "}).get()";
+//        $url = self::$http_api_url . getAccessToken();
+//        $obj = new class
+//        {
+//        };
+//        $obj->env = self::$env;
+//        $obj->query = $query;// $param['query'];
+//        $data = json_encode($obj);
+//
+//        return httpRequest($url, $data);
+//
+//    }
 
     public static function findCompanyList()
     {

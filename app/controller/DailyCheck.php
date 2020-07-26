@@ -20,7 +20,7 @@ class DailyCheck extends BaseController
     }
 
     public function create(Request $request) {
-        $this->app->cloudService->databaseAdd('bs_daily_check',$request->param());
+        $this->app->cloudService->dailyCheckAdd('bs_daily_check',$request->param());
     }
 
     public function update(Request $request) {

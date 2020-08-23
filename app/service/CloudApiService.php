@@ -375,15 +375,11 @@ class CloudApiService
     {
         $url = self::$HTTPAPI_DATABASE_DELETE . getAccessToken();
         try {
-            $modelObj = new class
-            {
-            };
+            $modelObj = new class{};
             $modelObj->data = $dataObj;
             $query = "db.collection('" . $collection . "').where({_id:'" . $dataObj['_id'] . "'}).remove()";
 
-            $obj = new class
-            {
-            };
+            $obj = new class{};
             $obj->env = self::$env;
             $obj->query = $query;
             $data = json_encode($obj);
@@ -392,6 +388,44 @@ class CloudApiService
         }
 
         httpRequest($url, $data);
+
+        // 更新设备表中的状态
+        if (strcmp($collection, 'bs_daily_check') == 0) {
+            $collection = "bs_device";
+            $id = $dataObj['device_id'];
+            $kindType = $dataObj['kind_type'];
+            self::updateDeviceDailyCheckState2($collection,$id,$kindType);
+        }
+
+    }
+
+    private static function updateDeviceDailyCheckState2($collection,$id,$kindType) {
+        $url = self::$HTTPAPI_DATABASE_UPDATE . getAccessToken();
+        $dataObj = array(
+            'daily_check_1_state' => 0,
+            'daily_check1_num' => 1
+        );
+        if ($kindType == 2) {
+            $dataObj = array(
+                'daily_check_2_state' => 0,
+                'daily_check2_num' => 1
+            );
+        }
+        try {
+            $modelObj = new class{};
+            $modelObj->data = $dataObj;
+            $query = "db.collection('" . $collection . "').where({_id:'" . $id . "'}).update(" . json_encode($modelObj) . ")";
+
+            $obj = new class{};
+            $obj->env = self::$env;
+            $obj->query = $query;// $param['query'];
+            $data = json_encode($obj);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+
+        httpRequest($url, $data);
+
     }
 
 }
